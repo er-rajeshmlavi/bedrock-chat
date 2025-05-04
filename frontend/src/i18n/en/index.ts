@@ -25,12 +25,12 @@ const translation = {
       'claude-v3.5-sonnet': {
         label: 'Esly v1.0',
         description:
-          'An earlier version of Esly 1.0. Supports a wide range of tasks.',
+          'An earlier version of Esly v1.0 based on Claude v3.5. Supports a wide range of tasks.',
       },
       'claude-v3.5-sonnet-v2': {
-        label: 'Claude 3.5 (Sonnet) v2',
+        label: 'Esly v2.0',
         description:
-          'The latest version of Claude 3.5. An enhanced model that builds on v1 with higher accuracy and performance.',
+          'The latest version of Esly v2.0 based on Claude v3.5. An enhanced model that builds on v1.0 with higher accuracy and performance.',
       },
       'claude-v3.7-sonnet': {
         label: 'Claude 3.7 Sonnet',
