@@ -58,7 +58,7 @@ export interface BedrockChatStackProps extends StackProps {
 export class BedrockChatStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props: BedrockChatStackProps) {
     super(scope, id, {
-      description: "Bedrock Chat Stack (uksb-1tupboc46)",
+      description: "Selira Chat Stack (uksb-1tupboc46)",
       ...props,
     });
 

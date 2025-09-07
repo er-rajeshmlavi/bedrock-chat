@@ -9,7 +9,7 @@ const translation: typeof en = {
       },
     },
     app: {
-      name: 'Bedrock Chat',
+      name: 'Selira Chat',
       inputMessage: 'お手伝いできることはありますか？',
       starredBots: 'スター付きのボット',
       recentlyUsedBots: '最近使用したボット',
@@ -192,16 +192,16 @@ const translation: typeof en = {
           description: 'ナレッジから情報を取得します。',
         },
         bedrock_agent: {
-          name: 'Bedrock Agent',
-          description: '設定されたBedrock Agentに質問を送信します。',
+          name: 'Selira Agent',
+          description: '設定されたSelira Agentに質問を送信します。',
         },
         firecrawl: {
           apiKey: 'Firecrawl APIキー',
           maxResults: '最大結果数',
         },
         bedrockAgent: {
-          name: 'Bedrock Agent',
-          description: 'Bedrock Agentをツールとして使用します。',
+          name: 'Selira Agent',
+          description: 'Selira Agentをツールとして使用します。',
           agentId: {
             label: 'Agent ID',
             placeholder: 'Agent IDを入力',

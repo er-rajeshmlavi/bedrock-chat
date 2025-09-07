@@ -6,7 +6,7 @@ const translation = {
       },
     },
     app: {
-      name: 'Bedrock Chat',
+      name: 'Selira Chat',
       inputMessage: 'Como posso te ajudar?',
       starredBots: 'Bots Favoritos',
       recentlyUsedBots: 'Bots Usados Recentemente',
@@ -181,16 +181,16 @@ const translation = {
           description: 'Recupere informações do conhecimento.',
         },
         bedrock_agent: {
-          name: 'Agente Bedrock',
-          description: 'Faça uma pergunta ao Agente Bedrock configurado',
+          name: 'Selira Agent',
+          description: 'Faça uma pergunta ao Selira Agent configurado',
         },
         firecrawl: {
           apiKey: 'Chave de API do Firecrawl',
           maxResults: 'Máximo de Resultados',
         },
         bedrockAgent: {
-          name: 'Agente Bedrock',
-          description: 'Use o Agente Bedrock como uma ferramenta.',
+          name: 'Selira Agent',
+          description: 'Use o Selira Agent como uma ferramenta.',
           agentId: {
             label: 'ID do Agente',
             placeholder: 'Digite o ID do Agente',

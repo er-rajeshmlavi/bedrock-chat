@@ -1,4 +1,4 @@
-<h1 align="center">Bedrock Chat (BrChat)</h1>
+<h1 align="center">Selira Chat</h1>
 
 <p align="center">
   <img src="https://img.shields.io/github/v/release/aws-samples/bedrock-chat?style=flat-square" />
@@ -81,7 +81,7 @@ By using the [Agent functionality](./docs/AGENT.md), your chatbot can automatica
 
 ### Supported regions
 
-Please make sure that you deploy Bedrock Chat in a region [where OpenSearch Serverless and Ingestion APIs are available](https://docs.aws.amazon.com/general/latest/gr/opensearch-service.html), if you want to use bots and create knowledge bases (OpenSearch Serverless is the default choice). As of August 2025, the following regions are supported: us-east-1, us-east-2, us-west-1, us-west-2, ap-south-1, ap-northeast-1, ap-northeast-2, ap-southeast-1, ap-southeast-2, ca-central-1, eu-central-1, eu-west-1, eu-west-2, eu-south-2, eu-north-1, sa-east-1
+Please make sure that you deploy Selira Chat in a region [where OpenSearch Serverless and Ingestion APIs are available](https://docs.aws.amazon.com/general/latest/gr/opensearch-service.html), if you want to use bots and create knowledge bases (OpenSearch Serverless is the default choice). As of August 2025, the following regions are supported: us-east-1, us-east-2, us-west-1, us-west-2, ap-south-1, ap-northeast-1, ap-northeast-2, ap-southeast-1, ap-southeast-2, ca-central-1, eu-central-1, eu-west-1, eu-west-2, eu-south-2, eu-north-1, sa-east-1
 
 For the **bedrock-region** parameter you need to choose a region [where Bedrock is available](https://docs.aws.amazon.com/general/latest/gr/bedrock.html).
 
@@ -108,8 +108,8 @@ You can specify the following parameters during deployment to enhance security a
 - **--disable-ipv6**: Disable connections over IPv6. (default: enabled)
 - **--allowed-signup-email-domains**: Comma-separated list of allowed email domains for sign-up. (default: no domain restriction)
 - **--bedrock-region**: Define the region where bedrock is available. (default: us-east-1)
-- **--repo-url**: The custom repo of Bedrock Chat to deploy, if forked or custom source control. (default: https://github.com/aws-samples/bedrock-chat.git)
-- **--version**: The version of Bedrock Chat to deploy. (default: latest version in development)
+- **--repo-url**: The custom repo of Selira Chat to deploy, if forked or custom source control. (default: https://github.com/aws-samples/bedrock-chat.git)
+- **--version**: The version of Selira Chat to deploy. (default: latest version in development)
 - **--cdk-json-override**: You can override any CDK context values during deployment using the override JSON block. This allows you to modify the configuration without editing the cdk.json file directly.
 
 Example usage:
@@ -170,7 +170,7 @@ The sign-up screen will appear as shown above, where you can register your email
 > Without setting the optional parameter, this deployment method allows anyone who knows the URL to sign up. For production use, it is strongly recommended to add IP address restrictions and disable self-signup to mitigate security risks (you can define allowed-signup-email-domains to restrict users so that only email addresses from your company's domain can sign up). Use both ipv4-ranges and ipv6-ranges for IP address restrictions, and disable self-signup by using disable-self-register when executing ./bin.
 
 > [!TIP]
-> If the `Frontend URL` does not appear or Bedrock Chat does not work properly, it may be a problem with the latest version. In this case, please add `--version "v3.0.0"` to the parameters and try deployment again.
+> If the `Frontend URL` does not appear or Selira Chat does not work properly, it may be a problem with the latest version. In this case, please add `--version "v3.0.0"` to the parameters and try deployment again.
 
 ## Architecture
 
@@ -218,7 +218,7 @@ npm ci
   - `bedrockRegion`: Region where Bedrock is available. **NOTE: Bedrock does NOT support all regions for now.**
   - `allowedIpV4AddressRanges`, `allowedIpV6AddressRanges`: Allowed IP Address range.
   - `enableLambdaSnapStart`: Defaults to true. Set to false if deploying to a [region that doesn't support Lambda SnapStart for Python functions](https://docs.aws.amazon.com/lambda/latest/dg/snapstart.html#snapstart-supported-regions).
-  - `globalAvailableModels`: Defaults to all. If set (list of model IDs), allows to globally control which models appear in dropdown menus across chats for all users and during bot creation in the Bedrock Chat application. 
+  - `globalAvailableModels`: Defaults to all. If set (list of model IDs), allows to globally control which models appear in dropdown menus across chats for all users and during bot creation in the Selira Chat application. 
 The following model IDs are supported (please make sure that they are also enabled in the Bedrock console under Model access in your deployment region):
 - **Claude Models:** `claude-v4-opus`, `claude-v4.1-opus`, `claude-v4-sonnet`, `claude-v3.5-sonnet`, `claude-v3.5-sonnet-v2`, `claude-v3.7-sonnet`, `claude-v3.5-haiku`, `claude-v3-haiku`, `claude-v3-opus`
 - **Amazon Nova Models:** `amazon-nova-pro`, `amazon-nova-lite`, `amazon-nova-micro`

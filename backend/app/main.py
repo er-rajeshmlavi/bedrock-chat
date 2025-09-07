@@ -47,10 +47,10 @@ if not is_published_api:
         {"name": "bot_store", "description": "Bot Store API"},
         {"name": "config", "description": "Global Configuration API"},
     ]
-    title = "Bedrock Chat"
+    title = "Selira Chat"
 else:
     openapi_tags = [{"name": "published_api", "description": "Published API"}]
-    title = "Bedrock Chat Published API"
+    title = "Selira Chat Published API"
 
 
 app = FastAPI(

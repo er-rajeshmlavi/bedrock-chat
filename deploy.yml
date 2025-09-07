@@ -1,5 +1,5 @@
 AWSTemplateFormatVersion: "2010-09-09"
-Description: A template to deploy the Bedrock-Claude Chat application with customizable parameters.
+Description: A template to deploy the Selira Chat application with customizable parameters.
 
 Parameters:
   AllowSelfRegister:

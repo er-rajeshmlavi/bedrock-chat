@@ -47,7 +47,7 @@ function getEnvVar(name: string, defaultValue?: string): string | undefined {
 }
 
 /**
- * Parameters schema for the main Bedrock Chat application
+ * Parameters schema for the main Selira Chat application
  */
 const BedrockChatParametersSchema = BaseParametersSchema.extend({
 
@@ -176,7 +176,7 @@ export type BedrockCustomBotParameters = z.infer<
 >;
 
 /**
- * Parse and validate parameters for the main Bedrock Chat application.
+ * Parse and validate parameters for the main Selira Chat application.
  * If you omit parametersInput, context parameters and environment variables are used.
  * @param app CDK App instance
  * @param parametersInput (optional) Input parameters that should be used instead of context parameters
@@ -240,7 +240,7 @@ export function resolveBedrockChatParameters(
 }
 
 /**
- * Get Bedrock Chat parameters based on environment name.
+ * Get Selira Chat parameters based on environment name.
  * If you omit envName, "default" is used.
  * If you omit parametersInput, context parameters and environment variables are used.
  * @param app CDK App instance

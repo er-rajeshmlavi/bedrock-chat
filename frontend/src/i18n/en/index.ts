@@ -6,7 +6,7 @@ const translation = {
       },
     },
     app: {
-      name: 'Bedrock Chat',
+      name: 'Selira Chat',
       inputMessage: 'How can I Help You?',
       starredBots: 'Starred Bots',
       recentlyUsedBots: 'Recently Used Bots',
@@ -191,16 +191,16 @@ const translation = {
           description: 'Retrieve information from knowledge.',
         },
         bedrock_agent: {
-          name: 'Bedrock Agent',
-          description: 'Ask a question to the configured Bedrock Agent',
+          name: 'Selira Agent',
+          description: 'Ask a question to the configured Selira Agent',
         },
         firecrawl: {
           apiKey: 'Firecrawl API Key',
           maxResults: 'Maximum Results',
         },
         bedrockAgent: {
-          name: 'Bedrock Agent',
-          description: 'Use Bedrock Agent as a tool.',
+          name: 'Selira Agent',
+          description: 'Use Selira Agent as a tool.',
           agentId: {
             label: 'Agent ID',
             placeholder: 'Enter Agent ID',
