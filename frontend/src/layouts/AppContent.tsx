@@ -28,7 +28,7 @@ type Props = BaseProps & {
 const AppContent: React.FC<Props> = (props) => {
   const { i18n } = useTranslation();
   const { getPageLabel } = usePageLabel();
-  const { switchOpen: switchDrawer } = useDrawer();
+  const { opened, switchOpen: switchDrawer } = useDrawer();
   const navigate = useNavigate();
   const { conversationId } = useParams();
   const {
@@ -49,8 +49,11 @@ const AppContent: React.FC<Props> = (props) => {
 
   const onClickNewChat = useCallback(() => {
     navigate('/');
+    if (opened) {
+      switchDrawer();
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [navigate, opened, switchDrawer]);
 
   const [isOpenDeleteChat, setIsOpenDeleteChat] = useState(false);
   const [deleteTarget, setDeleteTarget] = useState<
@@ -90,27 +93,37 @@ const AppContent: React.FC<Props> = (props) => {
 
   return (
     <div className="relative flex h-dvh w-screen bg-aws-paper-light dark:bg-aws-paper-dark">
-      <Drawer
-        isAdmin={isAdmin}
-        conversations={conversations}
-        starredBots={starredBots}
-        recentlyUsedUnstarredBots={recentlyUsedUnstarredBots}
-        updateConversationTitle={async (conversationId, title) => {
-          await updateTitle(conversationId, title);
-        }}
-        onSignOut={() => {
-          props.signOut ? props.signOut() : null;
-        }}
-        onDeleteConversation={(conversation) => {
-          setIsOpenDeleteChat(true);
-          setDeleteTarget(conversation);
-        }}
-        onClearConversations={() => setIsOpenClearConversations(true)}
-        onSelectLanguage={() => setIsOpenSelectLanguage(true)}
-        onClickDrawerOptions={() => {
-          setIsOpenDrawerOptions(true);
-        }}
-      />
+      <div className={`fixed inset-y-0 left-0 z-50 ${opened ? 'translate-x-0' : '-translate-x-full'} transition-transform duration-300 ease-in-out`}>
+        <Drawer
+          isAdmin={isAdmin}
+          conversations={conversations}
+          starredBots={starredBots}
+          recentlyUsedUnstarredBots={recentlyUsedUnstarredBots}
+          updateConversationTitle={async (conversationId, title) => {
+            await updateTitle(conversationId, title);
+          }}
+          onSignOut={() => {
+            props.signOut ? props.signOut() : null;
+          }}
+          onDeleteConversation={(conversation) => {
+            setIsOpenDeleteChat(true);
+            setDeleteTarget(conversation);
+          }}
+          onClearConversations={() => setIsOpenClearConversations(true)}
+          onSelectLanguage={() => setIsOpenSelectLanguage(true)}
+          onClickDrawerOptions={() => {
+            setIsOpenDrawerOptions(true);
+          }}
+        />
+      </div>
+      
+      {/* Backdrop */}
+      {opened && (
+        <div
+          className="fixed inset-0 z-40 bg-black bg-opacity-50"
+          onClick={() => switchDrawer()}
+        />
+      )}
       <DialogConfirmDeleteChat
         isOpen={isOpenDeleteChat}
         target={deleteTarget}
@@ -146,7 +159,7 @@ const AppContent: React.FC<Props> = (props) => {
       />
 
       <main className="relative flex min-h-dvh flex-1 flex-col overflow-y-hidden transition-width">
-        <header className="visible flex h-12 w-full items-center bg-aws-squid-ink-light p-3 text-lg text-aws-font-color-white-light dark:bg-aws-squid-ink-dark dark:text-aws-font-color-white-dark lg:hidden lg:h-0">
+        <header className="visible flex h-12 w-full items-center bg-aws-squid-ink-light p-3 text-lg text-aws-font-color-white-light dark:bg-aws-squid-ink-dark dark:text-aws-font-color-white-dark">
           <button
             className="mr-2 rounded-full p-2 hover:brightness-50 focus:outline-none focus:ring-1 "
             onClick={() => {

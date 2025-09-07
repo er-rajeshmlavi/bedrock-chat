@@ -201,7 +201,8 @@ const ChatMessage: React.FC<Props> = (props) => {
           )}
           {chatContent?.role === 'assistant' &&
             tools != null &&
-            tools.length > 0 && (
+            tools.length > 0 && 
+            false && ( // Hide tool usage blocks from end users
               <div className="flex flex-col">
                 {tools.map((tools, index) => (
                   <div key={index} className="mb-3 mt-0">

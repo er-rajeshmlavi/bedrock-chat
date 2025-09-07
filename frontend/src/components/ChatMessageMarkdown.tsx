@@ -103,7 +103,15 @@ const ChatMessageMarkdown: React.FC<Props> = ({
 
   const chatWaitingSymbol = useMemo(() => i18next.t('app.chatWaitingSymbol'), []);
   const text = useMemo(() => {
-    const textRemovedIncompleteCitation = children.replace(/\[\^[^\]]*?$/, '[^');
+    // Remove thinking tags and their content from the message (handles both <thinking> and &lt;thinking&gt; formats)
+    let textRemovedThinking = children
+      .replace(/<thinking>[\s\S]*?<\/thinking>/gi, '')
+      .replace(/&lt;thinking&gt;[\s\S]*?&lt;\/thinking&gt;/gi, '')
+      .replace(/<thinking>[\s\S]*$/gi, '') // Handle incomplete thinking tags during streaming
+      .replace(/&lt;thinking&gt;[\s\S]*$/gi, '') // Handle incomplete HTML-encoded thinking tags
+      .trim();
+    
+    const textRemovedIncompleteCitation = textRemovedThinking.replace(/\[\^[^\]]*?$/, '[^');
     let textReplacedSourceId = textRemovedIncompleteCitation.replace(
       /\[\^(?<sourceId>[\w!?/+\-_~=;.,*&@#$%]+?)\]/g,
       (_, sourceId) => {

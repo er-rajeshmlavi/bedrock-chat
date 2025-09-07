@@ -29,7 +29,6 @@ import {
 import LazyOutputText from './LazyOutputText';
 import { ConversationMeta } from '../@types/conversation';
 import { BotListItem } from '../@types/bot';
-import { isMobile } from 'react-device-detect';
 import useChat from '../hooks/useChat';
 import { useTranslation } from 'react-i18next';
 import Menu from './Menu';
@@ -232,11 +231,18 @@ const Drawer: React.FC<Props> = (props) => {
     }
   }, [conversations, prevConversations]);
 
-  const onClickNewChat = useCallback(() => {
-    newChat();
-    closeSmallDrawer();
+  const closeSmallDrawer = useCallback(() => {
+    if (opened) {
+      switchOpen();
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [opened, switchOpen]);
+
+  const onClickNewChat = useCallback(() => {
+    closeSmallDrawer();
+    navigate('/');
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [navigate, closeSmallDrawer]);
 
   const onClickNewBotChat = useCallback(
     () => {
@@ -244,36 +250,8 @@ const Drawer: React.FC<Props> = (props) => {
       closeSmallDrawer();
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    []
+    [newChat, closeSmallDrawer]
   );
-
-  const smallDrawer = useRef<HTMLDivElement>(null);
-
-  const closeSmallDrawer = useCallback(() => {
-    if (smallDrawer.current?.classList.contains('visible')) {
-      switchOpen();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  useLayoutEffect(() => {
-    // リサイズイベントを拾って状態を更新する
-    const onResize = () => {
-      if (isMobile) {
-        return;
-      }
-
-      // 狭い画面のDrawerが表示されていて、画面サイズが大きくなったら状態を更新
-      if (!smallDrawer.current?.checkVisibility() && opened) {
-        switchOpen();
-      }
-    };
-    onResize();
-
-    window.addEventListener('resize', onResize);
-    return () => window.removeEventListener('resize', onResize);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [opened]);
 
   const isAdminPanel = useMemo(() => {
     return location.pathname.startsWith('/admin');
@@ -281,11 +259,8 @@ const Drawer: React.FC<Props> = (props) => {
 
   return (
     <>
-      <div className="relative h-full overflow-y-auto bg-aws-squid-ink-light scrollbar-thin scrollbar-track-white scrollbar-thumb-aws-squid-ink-light/30 dark:bg-aws-ui-color-dark dark:scrollbar-thumb-aws-ui-color-dark/30">
-        <nav
-          className={`lg:visible lg:w-64 ${
-            opened ? 'visible w-64' : 'invisible w-0'
-          } text-sm  text-white transition-width`}>
+      <div className="relative h-full w-64 overflow-y-auto bg-aws-squid-ink-light scrollbar-thin scrollbar-track-white scrollbar-thumb-aws-squid-ink-light/30 dark:bg-aws-ui-color-dark dark:scrollbar-thumb-aws-ui-color-dark/30">
+        <nav className="w-64 text-sm text-white pb-20">
           {!isAdminPanel && (
             <>
               <DrawerItem
@@ -312,7 +287,7 @@ const Drawer: React.FC<Props> = (props) => {
 
               <ExpandableDrawerGroup
                 label={t('app.starredBots')}
-                className="border-t bg-aws-squid-ink-light pt-1 dark:bg-aws-squid-ink-dark">
+                className="mt-4 pt-4 border-t border-white/10 dark:border-white/10">
                 {starredBots === undefined && (
                   <div className="flex flex-col gap-2 p-2">
                     <Skeleton className="h-10 w-full bg-aws-sea-blue-light/50 dark:bg-aws-sea-blue-dark/50" />
@@ -357,7 +332,7 @@ const Drawer: React.FC<Props> = (props) => {
 
               <ExpandableDrawerGroup
                 label={t('app.recentlyUsedBots')}
-                className="border-t bg-aws-squid-ink-light pt-1 dark:bg-aws-squid-ink-dark ">
+                className="mt-4 pt-4 border-t border-white/10 dark:border-white/10">
                 {recentlyUsedUnstarredBots === undefined && (
                   <div className="flex flex-col gap-2 p-2">
                     <Skeleton className="h-10 w-full bg-aws-sea-blue-light/50 dark:bg-aws-sea-blue-dark/50" />
@@ -403,7 +378,7 @@ const Drawer: React.FC<Props> = (props) => {
               <ExpandableDrawerGroup
                 label={t('app.conversationHistory')}
                 className={twMerge(
-                  'border-t bg-aws-squid-ink-light pt-1 dark:bg-aws-squid-ink-dark',
+                  'mt-4 pt-4 border-t border-white/10 dark:border-white/10',
                   props.isAdmin ? 'mb-20' : 'mb-10'
                 )}>
                 {conversations === undefined && (
@@ -470,9 +445,9 @@ const Drawer: React.FC<Props> = (props) => {
 
           <div
             className={twMerge(
-              opened ? 'w-64' : 'w-0',
-              props.isAdmin ? 'h-20' : 'h-10',
-              'fixed -bottom-2 z-50 mb-2 flex flex-col items-start border-t bg-aws-squid-ink-light transition-width dark:bg-aws-ui-color-dark lg:w-64'
+              'w-64',
+              props.isAdmin ? 'h-20' : 'h-12',
+              'absolute bottom-0 left-0 flex flex-col items-start pt-4 border-t border-white/10 dark:border-white/10 bg-aws-squid-ink-light dark:bg-aws-ui-color-dark'
             )}>
             {props.isAdmin && !isAdminPanel && (
               <DrawerItem
@@ -495,7 +470,7 @@ const Drawer: React.FC<Props> = (props) => {
               />
             )}
             <Menu
-              className="mx-2 flex h-10 w-60 justify-start"
+              className="mx-2 flex h-10 w-60 justify-start items-center"
               onSignOut={props.onSignOut}
               onSelectLanguage={props.onSelectLanguage}
               onClearConversations={props.onClearConversations}
@@ -503,19 +478,6 @@ const Drawer: React.FC<Props> = (props) => {
             />
           </div>
         </nav>
-      </div>
-
-      <div
-        ref={smallDrawer}
-        className={`lg:hidden ${opened ? 'visible' : 'hidden'}`}>
-        <ButtonIcon
-          className="fixed left-64 top-0 z-50 text-white"
-          onClick={switchOpen}>
-          <PiX />
-        </ButtonIcon>
-        <div
-          className="fixed z-40 h-dvh w-screen bg-dark-gray/90"
-          onClick={switchOpen}></div>
       </div>
     </>
   );
